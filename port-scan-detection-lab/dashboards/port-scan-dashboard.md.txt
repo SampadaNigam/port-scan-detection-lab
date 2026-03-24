@@ -14,4 +14,4 @@ Provide a visual overview of scanning activity, including:
 4. **Event Distribution by Action**
 
 ## 📸 Screenshot
-`![Dashboard](../images/dashboard.png)`
+`![Dashboard](../images/dashboard-full.png)`
