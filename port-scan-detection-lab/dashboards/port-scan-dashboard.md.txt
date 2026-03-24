@@ -1,0 +1,17 @@
+# Port Scan Detection Dashboard
+
+## 🎯 Purpose
+Provide a visual overview of scanning activity, including:
+- Top source IPs
+- Scan velocity
+- Blocked ports
+- Timeline of events
+
+## 📊 Panels
+1. **Top Scanning IPs**
+2. **Ports Targeted**
+3. **Scan Timeline**
+4. **Event Distribution by Action**
+
+## 📸 Screenshot
+`![Dashboard](../images/dashboard.png)`

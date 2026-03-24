@@ -1,0 +1,22 @@
+# Port Scan Alert
+
+## 🎯 Alert Purpose
+Trigger when a source IP exceeds a defined threshold of blocked connection attempts.
+
+## ⚙️ Alert Logic (SPL)
+
+index=* ("UFW BLOCK")
+| rex "SRC=(?<src>\S+)"
+| rex "DPT=(?<dpt>\d+)"
+| stats count dc(dpt) as unique_ports values(dpt) as ports by src
+| where unique_ports > 10
+
+
+## 🔔 Alert Settings
+- Severity: Medium
+- Trigger: Once per result
+- Throttle: 30 minutes per source IP
+
+## 🧠 Analyst Notes
+- Helps identify active reconnaissance.
+- Tune thresholds to reduce false positives.

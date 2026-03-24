@@ -1,0 +1,28 @@
+# Multi-Stage Reconnaissance Detection
+
+## 🎯 Objective
+Detect sequential reconnaissance behavior such as:
+- Host discovery
+- Port scanning
+- Service probing
+
+## 🔍 Detection Logic (SPL)
+
+index=* sourcetype=syslog OR sourcetype=kern.log "UFW BLOCK"
+| rex "SRC=(?<src>\S+)"
+| rex "DPT=(?<dpt>\d+)"
+| eval scan_type=case(
+    dpt=22, "SSH",
+    dpt=53, "DNS",
+    dpt=80 OR dpt=443, "Web",
+    dpt<1024, "Privileged",
+    true(), "General"
+)
+| stats count dc(dpt) as unique_ports values(scan_type) as scan_stages by src
+| where unique_ports > 15 AND mvcount(scan_stages) > 2
+| sort - unique_ports
+
+
+## 🧠 Analyst Notes
+- Multi-stage recon is more malicious than a single scan.
+- Correlation across time windows increases detection accuracy.

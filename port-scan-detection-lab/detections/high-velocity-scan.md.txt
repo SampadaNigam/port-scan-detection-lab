@@ -1,0 +1,18 @@
+# High-Velocity Scan Detection
+
+## 🎯 Objective
+Identify rapid, high-volume connection attempts from a single source IP.
+
+## 🔍 Detection Logic (SPL)
+
+index=* sourcetype=syslog OR sourcetype=kern.log "UFW BLOCK"
+| rex "SRC=(?<src>\S+)"
+| bin _time span=1m
+| stats count by src, _time
+| where count > 50
+| sort - count
+
+
+## 🧠 Analyst Notes
+- Useful for detecting aggressive Nmap scans.
+- Thresholds can be tuned based on environment baseline.

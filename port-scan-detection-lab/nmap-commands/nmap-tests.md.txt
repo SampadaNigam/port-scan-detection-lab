@@ -1,0 +1,26 @@
+# Nmap Test Commands
+
+## 🎯 Purpose
+Generate controlled port-scan traffic for detection testing.
+
+## 🔧 Commands Used
+
+### SYN Scan
+nmap -sS <target>
+
+
+### Version Scan
+nmap -sV <target>
+
+
+### Aggressive Scan
+nmap -A <target>
+
+
+### UDP Scan
+nmap -sU <target>
+
+
+## 🧠 Notes
+- Run from Kali against Ubuntu.
+- Ensure UFW logging is enabled.

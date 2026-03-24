@@ -1,0 +1,26 @@
+# Port Scan Detection (UFW Logs)
+
+## 🎯 Objective
+Detect port-scanning activity against a Linux host using UFW firewall logs ingested into Splunk.
+
+## 📄 Log Source
+- UFW firewall logs from Ubuntu
+- Ingested via Splunk Universal Forwarder
+
+## 🔍 Detection Logic (SPL)
+
+index=* sourcetype=syslog OR sourcetype=kern.log "UFW BLOCK"
+| rex "SRC=(?<src>\S+)"
+| rex "DPT=(?<dpt>\d+)"
+| stats count dc(dpt) as unique_ports values(dpt) as ports by src
+| where unique_ports > 10
+| sort - unique_ports
+
+
+## 🧠 Analyst Notes
+- UFW logs provide clear indicators of repeated connection attempts.
+- High-frequency blocked packets from a single source often indicate scanning.
+- Combine with velocity thresholds for accuracy.
+
+## 📸 Screenshot
+`![Detection Results](../images/port-scan-detection-results.png)`
