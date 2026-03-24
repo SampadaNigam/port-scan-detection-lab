@@ -1,4 +1,115 @@
-# Port Scan Detection Dashboard
+# Port Scan Detection Dashboard XML 
+
+<dashboard>
+  <label>Port Scan Detection Dashboard</label>
+
+  <!-- =======================
+       PANEL 1: Scan Type Breakdown
+       ======================= -->
+  <row>
+    <panel>
+      <title>Scan Type Breakdown</title>
+      <chart>
+        <search>
+          <query>
+            index=* 
+            | eval scan_type=case(
+                match(_raw, "(?i)ACK PSH URG"), "OS Detection",
+                match(_raw, "(?i)ACK PSH"), "Version Scan",
+                match(_raw, "(?i)SYN") AND match(_raw, "(?i)UFW"), "SYN Scan",
+                match(_raw, "(?i)PROTO=UDP"), "UDP Scan",
+                1=1, "Other"
+              )
+            | stats count by scan_type
+          </query>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =======================
+       PANEL 2: Scan Timeline
+       ======================= -->
+  <row>
+    <panel>
+      <title>Scan Activity Over Time</title>
+      <chart>
+        <search>
+          <query>
+            index=* 
+            | eval scan_type=case(
+                match(_raw, "(?i)ACK PSH URG"), "OS Detection",
+                match(_raw, "(?i)ACK PSH"), "Version Scan",
+                match(_raw, "(?i)SYN") AND match(_raw, "(?i)UFW"), "SYN Scan",
+                match(_raw, "(?i)PROTO=UDP"), "UDP Scan",
+                1=1, "Other"
+              )
+            | timechart span=1m count by scan_type
+          </query>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =======================
+       PANEL 3: Top Attackers
+       ======================= -->
+  <row>
+    <panel>
+      <title>Top Source IPs (Attackers)</title>
+      <chart>
+        <search>
+          <query>
+            index=* SRC=* 
+            | stats count by SRC
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =======================
+       PANEL 4: Ports Targeted
+       ======================= -->
+  <row>
+    <panel>
+      <title>Most Targeted Destination Ports</title>
+      <chart>
+        <search>
+          <query>
+            index=* DPT=* 
+            | stats count by DPT
+            | sort - count
+          </query>
+        </search>
+        <option name="charting.chart">column</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- =======================
+       PANEL 5: Raw Events (Debugging)
+       ======================= -->
+  <row>
+    <panel>
+      <title>Raw Events (Last 5 Minutes)</title>
+      <table>
+        <search>
+          <query>
+            index=* 
+            | head 50
+          </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
+
 
 ## 🎯 Purpose
 Provide a visual overview of scanning activity, including:
@@ -13,5 +124,3 @@ Provide a visual overview of scanning activity, including:
 3. **Scan Timeline**
 4. **Event Distribution by Action**
 
-## 📸 Screenshot
-`![Dashboard](../images/dashboard-full.png)`
