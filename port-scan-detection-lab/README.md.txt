@@ -5,7 +5,7 @@ All detection logic, dashboards, alerts, and test commands are documented in sep
 
 ## 📁 Repository Structure
 - `detections/` — SPL queries and detection logic  
-- `dashboards/` — dashboard XML + screenshots  
+- `dashboards/` — dashboard XML  
 - `alerts/` — alert configuration and logic  
 - `nmap-commands/` — Nmap commands used to generate logs  
 - `images/` — diagrams and screenshots
