@@ -14,7 +14,7 @@ This project serves as a functional demonstration of defensive engineering capab
 ## 🏗️ Architectural Topology & Environment
 The infrastructure is hosted in a dedicated, isolated virtualization environment designed to mimic a demilitarized zone (DMZ) segment.
 
-![Lab Topology](images/lab-topology.png)
+![Lab Topology](port-scan-detection-lab/images/lab-topology.png)
 
 ### Technology Stack
 * **SIEM Core:** Splunk Enterprise (Log Ingestion, Custom Source-Typing, Search Processing Language - SPL)
