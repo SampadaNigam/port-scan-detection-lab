@@ -27,11 +27,11 @@ The infrastructure is hosted in a dedicated, isolated virtualization environment
 ## 📁 Repository Directory Structure
 
 ```text
-├── alerts/                # Production-ready Alert Rules, Trigger Conditions & Throttling Logic
-├── dashboards/            # Production XML Code for Real-Time Threat Intel Dashboards
-├── detections/            # Advanced SPL Queries & Index-Level Correlation Logic
-├── images/                # High-Resolution Architectural Diagrams & Dashboards Proofs
-└── nmap-commands/         # Controlled Attack Execution Framework and Command Playbooks
+├── alerts/                
+├── dashboards/            
+├── detections/          
+├── images/                
+└── nmap-commands/        
 ```
 
 ---
